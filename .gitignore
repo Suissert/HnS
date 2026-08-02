@@ -1,1 +1,21 @@
+# Build output
+bin/
+
+# Dependencies (scaricate da run.sh)
+lib/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.iml
+.idea/
+
+# Misc
 AGENTS.md
