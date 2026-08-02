@@ -37,8 +37,8 @@ sudo dnf install java-17-openjdk  # Fedora
 sudo pacman -S jdk-openjdk         # Arch
 
 # Clona la repository
-git clone <url-repository>
-cd Hack_n_slash_swing
+git clone https://github.com/Suissert/HnS.git
+cd HnS
 
 # Avvia
 ./run.sh
@@ -52,8 +52,8 @@ java -version
 # Se non e' installato: scarica da https://adoptium.net/
 
 # Clona la repository
-git clone <url-repository>
-cd Hack_n_slash_swing
+git clone https://github.com/Suissert/HnS.git
+cd HnS
 
 # Avvia
 .\run.bat
@@ -70,8 +70,8 @@ java -version
 brew install openjdk
 
 # Clona la repository
-git clone <url-repository>
-cd Hack_n_slash_swing
+git clone https://github.com/Suissert/HnS.git
+cd HnS
 
 # Avvia
 ./run.sh
