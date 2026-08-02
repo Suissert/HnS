@@ -1,7 +1,7 @@
 # Hack_n_slash
 
 Un gioco di programmazione in Java: due bot si sfidano su una griglia a turni.
-Tu scrivi l'IA del tuo bot, il motore di gioco gestisce il resto.
+Tu scrivi il tuo bot, il motore di gioco gestisce il resto.
 
 ---
 
