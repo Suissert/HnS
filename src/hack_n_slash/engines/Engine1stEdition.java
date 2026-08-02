@@ -1,15 +1,16 @@
 package hack_n_slash.engines;
 
 import java.lang.Math;
-import java.util.Scanner;
 
 import hack_n_slash.miscellaneous.*;
 import hack_n_slash.bots.*;
 import hack_n_slash.map.MatrixLogic;
+import hack_n_slash.graphics.GameView;
+import hack_n_slash.graphics.GameState;
 
 public class Engine1stEdition extends Engine {
 
-	enum Time {
+	public enum Time {
 		DAY,
 		NIGHT
 	}
@@ -22,9 +23,13 @@ public class Engine1stEdition extends Engine {
 	private boolean[] alreadyTeleported;
 	private boolean[] berserkerBuffNextTurn;
 	private boolean oneMoreTurn;
-	
-	public Engine1stEdition (MatrixLogic.Tiles[][] map, Bot bot0, Bot bot1) {
+	private GameView view;
+	private int currentTurn;
+
+	public Engine1stEdition (MatrixLogic.Tiles[][] map, Bot bot0, Bot bot1, GameView view) {
 		this.map = map;
+		this.view = view;
+		this.currentTurn = 0;
 		
 		bots = new Bot[2];
 		bots[0] = bot0;
@@ -60,11 +65,15 @@ public class Engine1stEdition extends Engine {
         int i = (int) (Math.random() * 2);
         int j = 0;
 
-    	printCurrentPosition();
+    	view.render(new GameState(time, hp[0], hp[1],
+    			coord[0].x, coord[0].y, coord[1].x, coord[1].y,
+    			coord[2].x, coord[2].y, map, currentTurn));
+    	view.waitForAdvance();
     	
         while (!terminated) { //fino a fine partita
         	
         	i = (i+1)%2;
+        	currentTurn = i;
         	terminated = play(i, bots[i].move(coord[i], coord[(i+1)%2], coord[2], hp[i], hp[(i+1)%2]));
         	if (oneMoreTurn) {
         		i = (i+1)%2;
@@ -81,10 +90,18 @@ public class Engine1stEdition extends Engine {
         			} while (!MatrixLogic.isValid(map[coord[2].y][coord[2].x]));
         		}
         	}
-        	printCurrentPosition();
-        }
-        // MESSAGGIO VITTORIA
-	}
+        	view.render(new GameState(time, hp[0], hp[1],
+        			coord[0].x, coord[0].y, coord[1].x, coord[1].y,
+        			coord[2].x, coord[2].y, map, currentTurn));
+        	view.waitForAdvance();
+}
+        int winner = (hp[0] > 0) ? 0 : 1;
+        System.out.println("Bot" + winner + " Vince!");
+        view.showWinner(winner);
+        view.render(new GameState(time, hp[0], hp[1],
+    			coord[0].x, coord[0].y, coord[1].x, coord[1].y,
+    			coord[2].x, coord[2].y, map, currentTurn));
+    }
 	
 	public boolean play(int turn, Action[] as) {
 		boolean terminated = false;
@@ -218,30 +235,6 @@ public class Engine1stEdition extends Engine {
 		}
 		coord[2].x = -1;
 		coord[2].y = -1;
-	}
-	
-	private void printCurrentPosition() {
-		Scanner scan = new Scanner(System.in);
-		System.out.println("\n\n\n" + time + "\t\t HP bot0: " + hp[0] + "\t\t HP bot1: " + hp[1]);
-		System.out.println("-------------------------------------------------------");
-		for (int i=0; i<map.length; i++) {
-			for (int j=0; j<map[0].length; j++) {
-				if (coord[0].y == i && coord[0].x == j) {
-					System.out.print("▄  ");
-				}
-				else if (coord[1].y == i && coord[1].x == j) {
-						System.out.print("▓  ");
-				}
-				else if (coord[2].y == i && coord[2].x == j) {
-					System.out.print("?  ");
-				}
-				else {
-					System.out.print(MatrixLogic.SYMBOL.get(map[i][j]) + "  ");
-				}
-			}
-			System.out.println("\n");
-		}
-		scan.nextLine();
 	}
 	
 }

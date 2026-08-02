@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Hack_n_slash",
+      "request": "launch",
+      "mainClass": "hack_n_slash.Main",
+      "projectName": "Hack_n_slash_swing",
+      "terminalKind": "integrated"
+    }
+  ]
+}
